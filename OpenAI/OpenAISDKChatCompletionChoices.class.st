@@ -18,17 +18,19 @@ Example:
 [This comment was automatically created with https://github.com/brackendev/OpenAI-Pharo]
 "
 Class {
-	#name : #OpenAISDKChatCompletionChoices,
-	#superclass : #Object,
+	#name : 'OpenAISDKChatCompletionChoices',
+	#superclass : 'Object',
 	#instVars : [
 		'index',
 		'message',
 		'finishReason'
 	],
-	#category : #'OpenAI-Model'
+	#category : 'OpenAI-Model',
+	#package : 'OpenAI',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OpenAISDKChatCompletionChoices class >> createWithAPIResponse: aResponse [
 
 	| message |
@@ -41,37 +43,37 @@ OpenAISDKChatCompletionChoices class >> createWithAPIResponse: aResponse [
 		  finishReason: (aResponse at: 'finish_reason')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChatCompletionChoices >> finishReason [
 
 	^ finishReason
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChatCompletionChoices >> finishReason: anObject [
 
 	finishReason := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChatCompletionChoices >> index [
 
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChatCompletionChoices >> index: anObject [
 
 	index := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChatCompletionChoices >> message [
 
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChatCompletionChoices >> message: anObject [
 
 	message := anObject

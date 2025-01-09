@@ -19,16 +19,18 @@ Example:
 [This comment was automatically created with https://github.com/brackendev/OpenAI-Pharo]
 "
 Class {
-	#name : #OpenAISDKChat,
-	#superclass : #Object,
+	#name : 'OpenAISDKChat',
+	#superclass : 'Object',
 	#instVars : [
 		'role',
 		'content'
 	],
-	#category : #'OpenAI-Model'
+	#category : 'OpenAI-Model',
+	#package : 'OpenAI',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OpenAISDKChat class >> createWithRole: aRoleString content: aContentString [
 
 	^ self new
@@ -36,19 +38,19 @@ OpenAISDKChat class >> createWithRole: aRoleString content: aContentString [
 		  content: aContentString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChat >> content [
 
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChat >> content: anObject [
 
 	content := anObject
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpenAISDKChat >> evaluate [
 
 	[ ^ Smalltalk compiler evaluate: content ]
@@ -56,19 +58,19 @@ OpenAISDKChat >> evaluate [
 		do: [ :error | error inspect ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChat >> role [
 
 	^ role
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKChat >> role: anObject [
 
 	role := anObject
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 OpenAISDKChat >> toDictionary [
 
 	^ {  ('role' -> role).

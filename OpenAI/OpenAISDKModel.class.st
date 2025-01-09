@@ -18,113 +18,73 @@ Example:
 [This comment was automatically created with https://github.com/brackendev/OpenAI-Pharo]
 "
 Class {
-	#name : #OpenAISDKModel,
-	#superclass : #Object,
+	#name : 'OpenAISDKModel',
+	#superclass : 'Object',
 	#instVars : [
 		'ownedBy',
-		'parent',
-		'root',
-		'permission',
 		'created',
 		'object',
 		'id'
 	],
-	#category : #'OpenAI-Model'
+	#category : 'OpenAI-Model',
+	#package : 'OpenAI',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OpenAISDKModel class >> createWithAPIResponse: aResponse [
 
 	^ self new
 		  ownedBy: (aResponse at: 'owned_by');
-		  parent: (aResponse at: 'parent');
-		  root: (aResponse at: 'root');
-		  permission: (aResponse at: 'permission');
 		  created: (aResponse at: 'created');
 		  object: (aResponse at: 'object');
 		  id: (aResponse at: 'id')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> created [
 
 	^ created
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> created: anObject [
 
 	created := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> id [
 
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> id: anObject [
 
 	id := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> object [
 
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> object: anObject [
 
 	object := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> ownedBy [
 
 	^ ownedBy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpenAISDKModel >> ownedBy: anObject [
 
 	ownedBy := anObject
-]
-
-{ #category : #accessing }
-OpenAISDKModel >> parent [
-
-	^ parent
-]
-
-{ #category : #accessing }
-OpenAISDKModel >> parent: anObject [
-
-	parent := anObject
-]
-
-{ #category : #accessing }
-OpenAISDKModel >> permission [
-
-	^ permission
-]
-
-{ #category : #accessing }
-OpenAISDKModel >> permission: anObject [
-
-	permission := anObject
-]
-
-{ #category : #accessing }
-OpenAISDKModel >> root [
-
-	^ root
-]
-
-{ #category : #accessing }
-OpenAISDKModel >> root: anObject [
-
-	root := anObject
 ]
