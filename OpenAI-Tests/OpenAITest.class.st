@@ -18,3 +18,13 @@ OpenAITest >> testListModels [
 	self assert: (modelIds size > 20).
 	self assert: (modelIds includes: 'gpt-4o')
 ]
+
+{ #category : 'tests' }
+OpenAITest >> testRetrieveModel [
+	| sdk model |
+	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	model := sdk retrieveModel: 'gpt-4o'.
+	self assert: model ownedBy equals: 'system'.
+	self assert: model id equals: 'gpt-4o'.
+	self assert: model object equals: 'model'.
+]
