@@ -36,10 +36,19 @@ OpenAITest >> testCreateImage [
 	self timeLimit: (Duration seconds: 30).
 	sdk := OpenAISDK createWithAPIKey: self apiKey.
 	imageRequest := OpenAISDKImageRequest withPrompt: 'An elephant drinking water on the moon'.
+	imageRequest
+		number: 2;
+		imageSize: '512x512';
+		model: 'dall-e-2';
+		quality: 'standard';
+		responseFormat: 'url';
+		style: 'natural';
+		user: 'pharo-test-user'.
 	image := sdk createImage: imageRequest.
 	self
 		assert: ((DateAndTime fromUnixTime: image created) dayOfYear) equals: (Date today dayOfYear);
-		assert: image images first bounds corner equals: 1024@1024.
+		assert: image images size equals: 2;
+		assert: image images first bounds corner equals: 512@512.
 
 ]
 

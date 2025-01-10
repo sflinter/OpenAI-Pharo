@@ -123,7 +123,16 @@ OpenAISDK >> createImage: anImageRequest [
 { #category : 'public' }
 OpenAISDK >> createImageWithPrompt: aPromptString [
 
-	^ self createImageWithPrompt: aPromptString number: 1 size: '1024x1024'
+	self
+		deprecated: 'Use createImage: instead of current one'
+		on: '10 January 2025'
+		in:
+		'Pharo-12.0.0+SNAPSHOT.build.1547.sha.1755f2b4c9a341b5853321bcf61754569cd6008c (64 Bit)'.
+
+	^ self
+		  createImageWithPrompt: aPromptString
+		  number: 1
+		  size: '1024x1024'
 ]
 
 { #category : 'public' }
@@ -131,6 +140,11 @@ OpenAISDK >> createImageWithPrompt: aPromptString number: aNumberString size: aS
 	"https://platform.openai.com/docs/api-reference/images/create"
 
 	| dict theClient json response decoded |
+	self
+		deprecated: 'Use createImage: instead of current one'
+		on: '10 January 2025'
+		in:
+		'Pharo-12.0.0+SNAPSHOT.build.1547.sha.1755f2b4c9a341b5853321bcf61754569cd6008c (64 Bit)'.
 	dict := {
 		        ('prompt' -> aPromptString).
 		        ('n' -> aNumberString).
