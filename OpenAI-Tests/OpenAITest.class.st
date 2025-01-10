@@ -31,6 +31,21 @@ OpenAITest >> testChatSession [
 { #category : 'tests' }
 OpenAITest >> testCreateImage [
 	"Programtically generate images"
+	| sdk imageRequest image |
+	
+	self timeLimit: (Duration seconds: 30).
+	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	imageRequest := OpenAISDKImageRequest withPrompt: 'An elephant drinking water on the moon'.
+	image := sdk createImage: imageRequest.
+	self
+		assert: ((DateAndTime fromUnixTime: image created) dayOfYear) equals: (Date today dayOfYear);
+		assert: image images first bounds corner equals: 1024@1024.
+
+]
+
+{ #category : 'tests' }
+OpenAITest >> testCreateImageWithPrompt [
+	"Programtically generate images"
 	| sdk image |
 	
 	self timeLimit: (Duration seconds: 30).

@@ -101,6 +101,25 @@ OpenAISDK >> createChatCompletionWithMessages: aChatObjectsArray model: aModelSt
 	^ OpenAISDKChatCompletion createWithAPIResponse: decoded
 ]
 
+{ #category : 'private' }
+OpenAISDK >> createImage: anImageRequest [ 
+	| json theClient response decoded |
+	json := NeoJSONWriter toString: anImageRequest asDictionary.
+
+	theClient := self client.
+	theClient
+		entity: (ZnEntity with: json type: ZnMimeType applicationJson);
+		url: self baseURL , '/images/generations'.
+
+	response := theClient post.
+
+	decoded := NeoJSONReader fromString: response.
+	(decoded includesKey: 'error') ifTrue: [
+		OpenAISDKException signalForObject: decoded ].
+
+	^ OpenAISDKImage createWithAPIResponse: decoded
+]
+
 { #category : 'public' }
 OpenAISDK >> createImageWithPrompt: aPromptString [
 
