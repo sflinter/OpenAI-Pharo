@@ -25,7 +25,7 @@ OpenAITest >> testChatSession [
 	chatSession submitUserPrompt: 'Show me Pharo code to add the number 5 to the end of your name. Respond with only Pharo code, no other text, no code block.'.
 	self
 		assert: (chatSession lastChat content findString: '5') > 0;
-		assert: (chatSession lastChat evaluate findString: 'OMM 00005') > 0.
+		assert: ((chatSession lastChat evaluate reject: #isSeparator) findString: 'OMM00005') > 0.
 ]
 
 { #category : 'tests' }
