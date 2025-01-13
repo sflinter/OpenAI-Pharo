@@ -1,3 +1,23 @@
+"
+1. Class: OpenAITest
+
+I represent a class that is designed to test the functionality of the OpenAI integration in Pharo.
+
+2. Responsibilities:
+   - I am responsible for setting up and executing tests to ensure the OpenAI integration is functioning correctly.
+   - I know how to simulate different scenarios to test the robustness and reliability of the OpenAI integration.
+   - I am also responsible for reporting the results of these tests, which can be used to identify and fix any potential issues.
+
+3. Collaborators:
+   - OpenAI: I interact with the OpenAI API to simulate real-world usage and test its responses.
+   - TestRunner: I interact with the TestRunner to execute my tests and report the results.
+
+4. Example:
+   - An example of using this class would be ""OpenAITest new runAllTests"", which would run all the tests defined in the OpenAITest class.
+
+
+[This comment was automatically created with https://github.com/brackendev/OpenAI-Pharo]
+"
 Class {
 	#name : 'OpenAITest',
 	#superclass : 'TestCase',
@@ -26,6 +46,18 @@ OpenAITest >> testChatSession [
 	self
 		assert: (chatSession lastChat content findString: '5') > 0;
 		assert: ((chatSession lastChat evaluate reject: #isSeparator) findString: 'OMM00005') > 0.
+]
+
+{ #category : 'tests' }
+OpenAITest >> testChatSesssionGUI [
+	| sdk chatGUI |
+	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	chatGUI := OpenAIChatGUI openWithSDK: sdk.
+	self
+		assert: chatGUI title equals: 'OpenAI Chat';
+		assert: chatGUI isBuilt ;
+		assert: chatGUI fieldModel text equals: 'gpt-4o'.
+	
 ]
 
 { #category : 'tests' }
@@ -67,6 +99,18 @@ OpenAITest >> testCreateImageWithPrompt [
 ]
 
 { #category : 'tests' }
+OpenAITest >> testImageGenerationGUI [
+	"Open an image generation GUI.
+	These tests currently fail. I think that it is related to how the OpenAIChatGUI widget is constructed"
+	
+	| sdk imageGUI |
+	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	imageGUI := OpenAIImageGUI openWithSDK: sdk.
+	self
+		assert: imageGUI textLabel equals: 'label'.
+]
+
+{ #category : 'tests' }
 OpenAITest >> testListModels [
 	| sdk modelIds |
 	sdk := OpenAISDK createWithAPIKey: self apiKey.
@@ -85,4 +129,15 @@ OpenAITest >> testRetrieveModel [
 		assert: model ownedBy equals: 'system';
 		assert: model id equals: 'gpt-4o';
 		assert: model object equals: 'model'.
+]
+
+{ #category : 'tests' }
+OpenAITest >> testUpdateClassComment [
+	"Update any class comment with the generated Class Responsibility Collaborator (based on class definitions and source code)"
+	| sdk |
+	
+	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	self class updateCommentWithOpenAICRCWithSDK: sdk.
+	self
+		assert: (self class comment findString: 'This comment was automatically created with https://github.com/brackendev/OpenAI-Pharo') > 0.
 ]
