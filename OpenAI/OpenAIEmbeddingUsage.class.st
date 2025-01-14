@@ -10,6 +10,13 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'instance creation' }
+OpenAIEmbeddingUsage class >> createwithAPIResponse: aUsageCollection [ 
+	^ self new
+		promptTokenCount: (aUsageCollection at: 'prompt_tokens');
+		totalTokenCount: (aUsageCollection at: 'total_tokens').
+]
+
 { #category : 'accessing' }
 OpenAIEmbeddingUsage >> promptTokenCount [
 	^ promptTokenCount
