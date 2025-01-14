@@ -101,6 +101,30 @@ OpenAISDK >> createChatCompletionWithMessages: aChatObjectsArray model: aModelSt
 	^ OpenAISDKChatCompletion createWithAPIResponse: decoded
 ]
 
+{ #category : 'public' }
+OpenAISDK >> createEmbedding: anInputString model: aModelString encodingFormat: anEncodingFormatString [ 
+	| dict json theClient response decoded |
+	dict := { 
+		('input' -> anInputString).
+		('model' -> aModelString).
+		('encoding_format' -> anEncodingFormatString)
+	 } asDictionary.
+	json := NeoJSONWriter toString: dict.
+
+	theClient := self client.
+	theClient
+		entity: (ZnEntity with: json type: ZnMimeType applicationJson);
+		url: self baseURL , '/embeddings'.
+
+	response := theClient post.
+
+	decoded := NeoJSONReader fromString: response.
+	(decoded includesKey: 'error') ifTrue: [
+		OpenAISDKException signalForObject: decoded ].
+
+	^ OpenAIEmbeddingResponse createWithAPIResponse: decoded
+]
+
 { #category : 'private' }
 OpenAISDK >> createImage: anImageRequest [ 
 	| json theClient response decoded |

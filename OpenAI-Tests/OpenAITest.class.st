@@ -99,6 +99,27 @@ OpenAITest >> testCreateImageWithPrompt [
 ]
 
 { #category : 'tests' }
+OpenAITest >> testEmbedding [
+	"Creates an embedding vector representing the input text."
+	
+	| sdk embedding embeddingResponse |
+	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	embedding := OpenAIEmbedding startWithSDK: sdk.
+	embeddingResponse := embedding
+		encodingFormat: 'float';
+		submitInput: 'The food was delicious and the waiter...'.
+	
+	self
+		assert: embeddingResponse object equals: 'list';
+		assert: embeddingResponse model equals: embedding model;
+		assert: ((embeddingResponse data first embedding at: 1) between: -1 and: 1);
+		assert: (embeddingResponse data first embedding size > 100);
+		assert: embeddingResponse usage promptTokenCount equals: 8;
+		assert: embeddingResponse usage totalTokenCount equals: 8.
+
+]
+
+{ #category : 'tests' }
 OpenAITest >> testImageGenerationGUI [
 	"Open an image generation GUI.
 	These tests currently fail. I think that it is related to how the OpenAIChatGUI widget is constructed"
