@@ -33,6 +33,13 @@ OpenAITest >> apiKey [
 	^ 'YOUR-API-KEY'
 ]
 
+{ #category : 'overrides' }
+OpenAITest >> setUp [
+	super setUp.
+	sdk := OpenAISDK createWithAPIKey: self apiKey.
+
+]
+
 { #category : 'tests' }
 OpenAITest >> testChatSession [
 	"Programatically use a chat session"
