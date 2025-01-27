@@ -21,6 +21,9 @@ I represent a class that is designed to test the functionality of the OpenAI int
 Class {
 	#name : 'OpenAITest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'sdk'
+	],
 	#category : 'OpenAI-Tests',
 	#package : 'OpenAI-Tests'
 }
@@ -33,9 +36,8 @@ OpenAITest >> apiKey [
 { #category : 'tests' }
 OpenAITest >> testChatSession [
 	"Programatically use a chat session"
-	| sdk chatSession |
+	| chatSession |
 		
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
 	chatSession := OpenAIChatSession startWithSDK: sdk.
 	chatSession
 		model: 'gpt-4o';
@@ -50,7 +52,9 @@ OpenAITest >> testChatSession [
 
 { #category : 'tests' }
 OpenAITest >> testChatSesssionGUI [
-	| sdk chatGUI |
+	"These tests currently fail. I think that it is related to how the OpenAIChatGUI widget is constructed"
+	| chatGUI |
+
 	sdk := OpenAISDK createWithAPIKey: self apiKey.
 	chatGUI := OpenAIChatGUI openWithSDK: sdk.
 	self
@@ -63,10 +67,9 @@ OpenAITest >> testChatSesssionGUI [
 { #category : 'tests' }
 OpenAITest >> testCreateImage [
 	"Programtically generate images"
-	| sdk imageRequest image |
+	| imageRequest image |
 	
 	self timeLimit: (Duration seconds: 30).
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
 	imageRequest := OpenAISDKImageRequest withPrompt: 'An elephant drinking water on the moon'.
 	imageRequest
 		number: 2;
@@ -87,10 +90,9 @@ OpenAITest >> testCreateImage [
 { #category : 'tests' }
 OpenAITest >> testCreateImageWithPrompt [
 	"Programtically generate images"
-	| sdk image |
+	| image |
 	
 	self timeLimit: (Duration seconds: 30).
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
 	image := sdk createImageWithPrompt: 'An elephant drinking water on the moon' number: 2 size: '1024x1024'.
 	self
 		assert: ((DateAndTime fromUnixTime: image created) dayOfYear) equals: (Date today dayOfYear);
@@ -102,8 +104,7 @@ OpenAITest >> testCreateImageWithPrompt [
 OpenAITest >> testEmbedding [
 	"Creates an embedding vector representing the input text."
 	
-	| sdk embedding embeddingResponse |
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	| embedding embeddingResponse |
 	embedding := OpenAIEmbedding startWithSDK: sdk.
 	embeddingResponse := embedding
 		encodingFormat: 'float';
@@ -124,8 +125,7 @@ OpenAITest >> testImageGenerationGUI [
 	"Open an image generation GUI.
 	These tests currently fail. I think that it is related to how the OpenAIChatGUI widget is constructed"
 	
-	| sdk imageGUI |
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	| imageGUI |
 	imageGUI := OpenAIImageGUI openWithSDK: sdk.
 	self
 		assert: imageGUI textLabel equals: 'label'.
@@ -133,8 +133,7 @@ OpenAITest >> testImageGenerationGUI [
 
 { #category : 'tests' }
 OpenAITest >> testListModels [
-	| sdk modelIds |
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	|  modelIds |
 	modelIds := sdk listModels allModelIds.
 	self
 		assert: (modelIds size > 20);
@@ -143,8 +142,7 @@ OpenAITest >> testListModels [
 
 { #category : 'tests' }
 OpenAITest >> testRetrieveModel [
-	| sdk model |
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
+	| model |
 	model := sdk retrieveModel: 'gpt-4o'.
 	self
 		assert: model ownedBy equals: 'system';
@@ -155,9 +153,7 @@ OpenAITest >> testRetrieveModel [
 { #category : 'tests' }
 OpenAITest >> testUpdateClassComment [
 	"Update any class comment with the generated Class Responsibility Collaborator (based on class definitions and source code)"
-	| sdk |
-	
-	sdk := OpenAISDK createWithAPIKey: self apiKey.
+
 	self class updateCommentWithOpenAICRCWithSDK: sdk.
 	self
 		assert: (self class comment findString: 'This comment was automatically created with https://github.com/brackendev/OpenAI-Pharo') > 0.
